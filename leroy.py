@@ -56,13 +56,17 @@ cat_finales={}
 palabrasClave=[]
 listaRefs=[]
 ltfidfs=[]
+lnombres=[]
+ltiendas=[]
+emails=[]
+
 #################################################################################
 
-#################### FUNCIONES PARA IMPRIMIR POR TERMINAL #######################
+#################### FUNCIONES PARA IMPRIMIR POR TERMINAL #######################ddf
 patterns_Asesoramiento_light = [
     [{"LEMMA": {"IN": ["querer", "ir", "desear", "preguntar",  "gustar", "necesitar", "gustariar", "deseariar", "poder", "podriar", "queria", "tener", "podrio"]}},
   {"POS": "ADP", "OP":"?"},
-  {"LEMMA": {"IN": ["comprar", "adquirir", "obtener", "enlazar", "ayudar", "poner", "ayudar él", "informar", "confirmar", "solicitar", "consultar", "consultarl", "comunicar yo", "usar", "indicar yo", "decirmir"]}}],
+  {"LEMMA": {"IN": ["comprar", "adquirir", "obtener", "enlazar", "ayudar", "poner", "ayudar él", "confirmar", "solicitar", "consultar", "consultarl", "comunicar yo", "usar", "indicar yo", "decirmir"]}}],
   
 ]
 patterns_Asesoramiento = [
@@ -139,19 +143,25 @@ patterns_pasado = [
  {"LOWER": {"IN": ["de"]}},
   {"LEMMA": {"IN": ["pedido"]}}],
 
-     [{"LOWER": {"IN": ["viene", "compré", "compró","compre", "compramos", "adquiri","adquirí", "pagado", "realicé", "comprado", "dispongo", "recibí", "recibido", "recibidas","recibida","llegó", "realizado", "hicimos", "hice", "realice"]}}]
+    [{"LOWER": {"IN": ["mis"]}}, 
+ {"LOWER": {"IN": ["compras"]}}],
+
+     [{"LOWER": {"IN": ["al"]}}, 
+ {"LOWER": {"IN": ["comprar", "sacar"]}}],
+
+     [{"LOWER": {"IN": ["viene", "compré", "compró","compre", "compramos", "adquiri","adquirí", "pagado", "realicé", "comprado", "dispongo", "recibí", "recibido", "recibidas","recibida","llegó", "realizado", "hicimos", "hice", "realice", "pedí"]}}]
   ]
 
 
 
 patterns_Transporte = [
-  [{"LEMMA": {"IN": ["entregar", "enviar"]}},
-  {"POS": "DET", "OP":"?"},
-  {"POS": "ADP", "OP":"?"},
-  {"LEMMA": {"IN": ["pedido"]}}],
+  #[{"LEMMA": {"IN": ["entregar", "enviar"]}},
+  #{"POS": "DET", "OP":"?"},
+  #{"POS": "ADP", "OP":"?"},
+  #{"LEMMA": {"IN": ["pedido"]}}],
 
-  [{"LEMMA": {"IN": ["hacer"]}},
-  {"LEMMA": {"IN": ["envío"]}}],
+  #[{"LEMMA": {"IN": ["hacer"]}},
+  #{"LEMMA": {"IN": ["envío"]}}],
 
 [{"LEMMA": {"IN": ["poder"]}},
   {"LEMMA": {"IN": ["enviar", "entregar"]}}],
@@ -212,7 +222,7 @@ patterns_Instalaciones = [
 
 patterns_Stock_General = [  
 
-      [{"LEMMA": {"IN": ["si"]}},
+      [{"LEMMA": {"IN": ["si", "cuándo"]}},
       {"LEMMA": {"IN": ["estar"]}},
   {"LEMMA": {"IN": ["disponible"]}}],
 
@@ -249,6 +259,9 @@ patterns_Stock_General = [
 ]
 
 patterns_Revisar = [
+ [{"LOWER": {"IN": ["estimado", "estimadoa"]}},
+    {"LOWER": {"IN": ["cliente"]}}],
+    
           [{"LEMMA": {"IN": ["servicio"]}},
   {"LEMMA": {"IN": ["técnico", "tecnico"]}}],
 
@@ -257,10 +270,10 @@ patterns_Revisar = [
     {"LOWER": {"IN": ["contacto"]}}],
 
   [{"LEMMA": {"IN": ["no"]}}, 
-  {"LOWER": {"IN": ["se", "sé", "puedo", "tengo", "encaja", "cabe", "vale", "valen", "coincide", "llega", "coinciden"]}}],
+  {"LOWER": {"IN": ["se", "sé", "puedo", "tengo", "encaja", "cabe", "vale", "valen", "coincide", "llega", "coinciden", "está", "estaba"]}}],
 
-    [{"LOWER": {"IN": ["solicito", "pido", "quiero"]}},
-    {"LOWER": {"IN": ["cancelar", "cancelación"]}}],
+    [{"LOWER": {"IN": ["solicito", "pido", "quiero", "pasamos"]}},   #aaalimeal
+    {"LOWER": {"IN": ["cancelar", "cancelación", "nota"]}}],
 
     [{"LEMMA": {"IN": ["faltar"]}},
     {"OP":"*"},
@@ -280,14 +293,18 @@ patterns_Revisar = [
      [{"LOWER": {"IN": ["estoy"]}},
     {"LOWER": {"IN": ["esperando"]}}],
 
-        [{"LOWER": {"IN": ["llegado", "recibido"]}}, #sssssssssaa
+        [{"LOWER": {"IN": ["llegado", "recibido"]}}, #aaadd
     {"OP":"*"},
     {"LOWER": {"IN": ["diferente", "distinto"]}}],
 
         [{"LOWER": {"IN": ["debería", "debe"]}},
         {"LOWER": {"IN": ["ser"]}}],
 
-        
+                  [{"LOWER": {"IN": ["no"]}},
+    {"OP":"?","LOWER": {"IN": ["he"]}},
+    {"LEMMA": {"IN": ["tener"]}},
+    {"LEMMA": {"IN": ["noticia"]}}],
+
           [{"LOWER": {"IN": ["no"]}},
     {"LOWER": {"IN": ["hay"]}},
     {"LOWER": {"IN": ["transporte"]}}], #transporte
@@ -327,9 +344,9 @@ patterns_Humano = [
 
 
     [{"LEMMA": {"IN": ["no"]}},
-   {"LEMMA": {"IN": ["me", "te", "querer", "es", "haber"]}},
+   {"LEMMA": {"IN": ["me", "te", "querer", "es", "haber", "lo"]}},
     {"OP":"?", "LOWER": {"IN": ["ha"]}},
-  {"LEMMA": {"IN": ["decir", "ayudar", "dicen", "saber", "recibir", "dejar", "llegar", "correcto", "llegado"]}}],
+  {"LEMMA": {"IN": ["decir", "ayudar", "dicen", "saber", "recibir", "dejar", "llegar", "correcto", "llegado", "tener"]}}],
 
    [{"LOWER": {"IN": ["no"]}},
    {"LOWER": {"IN": ["me", "te", "quiero", "es", "ha", "he"]}},
@@ -435,7 +452,7 @@ def calcular_tfidf(palabra, correo, correos_total):
 
 #################################################################################
 
-####################### FUNCIONES SOBRE LAS CATEGORÍAS ##########################
+####################### FUNCIONES SOBRE LAS CATEGORÍAS ##########################ss
 
 def añadirCategoria(valores, categoria, tfidf):
     if not (categoria in valores):
@@ -573,7 +590,7 @@ def treatPatterns(valores):
     valores["Instalaciones"].tfidfs+=valores["Instalaciones"].tfidfs+(valores["Instalaciones"].patrones)
     valores["Transporte"].tfidfs+=valores["Transporte"].tfidfs+(valores["Transporte"].patrones)*1
     valores["Alerta - Humano"].tfidfs+=valores["Alerta - Humano"].tfidfs+(valores["Alerta - Humano"].patrones)*10
-    valores["Revisar - Humano"].tfidfs+=valores["Revisar - Humano"].tfidfs+(valores["Revisar - Humano"].patrones)*5
+    valores["Revisar - Humano"].tfidfs+=valores["Revisar - Humano"].tfidfs+(valores["Revisar - Humano"].patrones)*10
 
    
 def treatTfidfs(valores, listaidfs):
@@ -672,11 +689,31 @@ def EvaluarCategoria(categorias, esperado):
 ####################### FUNCIONES PARA LIMPIAR STRINGS ##########################ssxx
 
 
-def limpiarString(mensaje, nlp):
+def limpiarString(mensaje, nlp, mail):
     #mensaje_lower = "".join(correos.lower()).split("escribió") #CORREOS
     #mensajecss = re.sub('(?s)<style>(.*?)</style>',' ',mensaje_lower[0]) #CORREOS
     mensaje = str(mensaje)
-    men = mensaje.replace(r'<[^>]+>', ' ').strip()      #quitamos etiquetas html
+    men = mensaje.split("Nombre:")
+    if len(men)>1:
+        men2 = men[1].split("Apellidos:")
+        lnombres.append(men2[0])
+        if len (men2)>1:
+            men = men2[1]
+        else:
+            men = men[0]  
+    else:
+        lnombres.append("")
+        men = men[0]
+
+    mail = str(mail)
+    mail = mail.split("atencioncliente.")
+    if len(mail)>1:
+        mail2 = mail[1].split("@")
+        emails.append(mail2[0])
+    else:
+        emails.append("")
+    
+    men = mensaje.replace(r'<[^>]+>', ' ').strip()      #quitamos etiquetas htmlll
     men = re.sub("\.", " ", men)
     men = re.sub(r'(https|http)?:\/\/(\w|\.|\/|\?|\=|\&|\%)*\b', ' ', men, flags=re.MULTILINE)
 
@@ -687,35 +724,36 @@ def limpiarString(mensaje, nlp):
     men = men.strip()    
     return nlp(men)
 
-#################################################################################
+#################################################################################jj
     
-########################### FUNCIONES SOBRE EL EXCEL ############################
+########################### FUNCIONES SOBRE EL EXCEL ############################sss
 def WriteExcel(id,cat,exp, correos):
 
     print("Escribimos excel")
     x = datetime.datetime.now()
-    do = pd.DataFrame({'ID': id, 'Categoria': cat, 'Esperado': exp, 'Correo':correos, 'Palabras':palabrasClave, 'Referencias': listaRefs, 'TFIDFS':ltfidfs}) 
+    do = pd.DataFrame({'ID': id, 'Categoria': cat, 'Esperado': exp, 'Correo':correos, 'Palabras':palabrasClave, 'Referencias': listaRefs, 'TFIDFS':ltfidfs, 'Nombres':lnombres, 'Tienda': emails}) 
     writer = ExcelWriter(str(x.strftime('C:/Users/51232209p/Desktop/leroyPython/venvLeroyKW/Correos Procesados/%d-%m-%Y %H-%M'))+' Categorizados.xlsx')
     do.to_excel(writer, 'Hoja de datos', index=False)
     writer.save()      
 
 def getCorreos(ids,expectedCategory, df, emails_total):
     nlp = spacy.load('es_core_news_sm')
-    i=600
-    while (i<900):
+    i=2700
+    while (i<3700):
     #for i in range(300):
         #
         ##
         
         id = df.iloc[i,16]               #Columna 1 -> 'ID'
         correos = df.iloc[i,21]          #Columna 2 -> 'Descripción'
-        expectedCategory.append(df.iloc[i,1])
+        expectedCategory.append(df.iloc[i,1]) 
+        emails=(df.iloc[i,14])
         ids.append(id)
-        emails_total.append(limpiarString(correos, nlp))
+        emails_total.append(limpiarString(correos, nlp, emails))
         i=i+1
 
-    return emails_total   #diccionario con ids de los correos y los correosfaabbxx
-    #return random.sample(emails_total, maxCorreos)cvvxxvvcc
+    return emails_total   #diccionario con ids de los correos y los correosqq
+    #return random.sample(emails_total, maxCorreos)
 
 
 def ReadExcel(url_excel):       
@@ -784,8 +822,8 @@ def Delete(cat):
 #ReadExcel('C:/Users/51232209p/Desktop/leroyPython/venvLeroyKW/CleanOutput/EjemploReducido.xlsx')
 #ReadExcel('C:/Users/51232209p/Desktop/leroyPython/venvLeroyKW/CleanOutput/Formularios Limpios 2.xlsx')
 #ReadExcel('C:/Users/51232209p/Desktop/Libro3.xlsx')
-ReadExcel('C:/Users/51232209p/Desktop/Formularios 5.xlsx')
-#ReadExcel('C:/Users/51232209p/Desktop/Correos 5.xlsx')
+#ReadExcel('C:/Users/51232209p/Desktop/Formularios 5.xlsx')
+ReadExcel('C:/Users/51232209p/Desktop/Correos 5.xlsx')
 #ReadExcel('C:/Users/51232209p/Desktop/Formularios Red.xlsx')
 #ReadExcel('C:/Users/51232209p/Desktop/leroyPython/venvLeroyKW/Input/Correos y formularios - 300.xlsx')
 #ReadExcel('C:/Users/51232209p/Desktop/leroyPython/venvLeroyKW/Input/Corredddos y formularios - 500.xlsx')

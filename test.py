@@ -26,7 +26,7 @@ patterns = [
 
 matcher = Matcher(nlp.vocab)
 matcher.add("TEST_PATTERNS", patterns)
-doc = nlp(" pongáis en contacto")
+doc = nlp("pongáis en contacto")
 past = 0
 for token in doc: 
     print(f"{token.text:<10} {token.lemma_:<10} {token.pos_:<10} {token.tag_:<10} {token.dep_:<10} ")
